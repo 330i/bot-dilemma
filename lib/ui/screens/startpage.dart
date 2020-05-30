@@ -9,11 +9,12 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: double.infinity,
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(''), fit: BoxFit.cover)),
+            image: DecorationImage(
+                image: AssetImage('assets/Back.png'),
+                fit: BoxFit.cover)),
         child: Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             body: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -32,13 +33,35 @@ class _StartPageState extends State<StartPage> {
                         SizedBox(height: 100),
 
                         //Total Post
-                        SizedBox(height: 100),
-                        RaisedButton(
-                          onPressed: () {},
-                          child: const Text('Start Chatting',
-                              style: TextStyle(fontSize: 20)),
+                        SizedBox(height: 50),
+                        Container(
+                          height: 50,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.orange.withOpacity(0.5),
+                                spreadRadius: 6,
+                                blurRadius: 6,
+                                offset:
+                                Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: RaisedButton(
+                            color: Colors.orangeAccent[100],
+                            onPressed: () {},
+                            child: const Text('Start Chatting',
+                                style: TextStyle(fontSize: 26)),
+                          ),
                         ),
-                        SizedBox(height: 60),
+                        SizedBox(height: 80),
 
                         Container(
                           margin: EdgeInsets.only(
@@ -49,7 +72,7 @@ class _StartPageState extends State<StartPage> {
                           height: 100,
                           width: 330,
                           decoration: BoxDecoration(
-                            color: Colors.orange,
+                            color: Colors.white30,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
