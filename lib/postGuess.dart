@@ -12,16 +12,15 @@ class PostGuess extends StatefulWidget {
 class _PostGuessState extends State<PostGuess> {
 
   Future<int> getPoint() async {
-    var userDoc = Firestore.instance.collection('chats').document('chatexample').get().then((value) {
-      if(value.data['uid1']==userid){
-
-      }
-      if(value.data['uid2']==userid){
-
-      }
+    var userPoint;
+    var userDoc = await Firestore.instance.collection('users').document(userid);
+    await Firestore.instance.collection('users').document(userid).get().then((value) {
+      userPoint = value.data['points'];
     });
     if(wasCorrect){
-
+      userDoc.setData({
+        'points':userPoint+50,
+      },merge: true);
     }
   }
 

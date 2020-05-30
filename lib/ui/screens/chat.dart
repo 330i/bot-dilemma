@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/api_client/api_client.dart';
 import 'package:socialchatbotapp/global.dart';
+import 'package:socialchatbotapp/login.dart';
 import 'package:socialchatbotapp/ui/widgets/widgets.dart';
 import 'package:socialchatbotapp/guess.dart';
+
+import '../../postGuess.dart';
 
 class ChatScreen extends StatefulWidget {
 
@@ -70,6 +73,37 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  void isCorrect(String guess) {
+    String uid1;
+    String uid2;
+    Firestore.instance.document('chatexample').get().then((value) {
+      uid1 = value.data['uid1'];
+      uid2 = value.data['uid2'];
+    });
+    if(userid==uid1){
+      if(uid2=='bot'&&guess=='bot'){
+        wasCorrect = true;
+      }
+      else if(uid2!='bot'&&guess!='bot'){
+        wasCorrect = true;
+      }
+      else{
+        wasCorrect = false;
+      }
+    }
+    else{
+      if(uid1=='bot'&&guess=='bot'){
+        wasCorrect = true;
+      }
+      else if(uid1!='bot'&&guess!='bot'){
+        wasCorrect = true;
+      }
+      else{
+        wasCorrect = false;
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,11 +166,23 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText: "               🤖 AI                 or                    🙎‍ HUMAN️  ",
-                              border: InputBorder.none),
-                        ),
+                        child: Row(
+                          children: [
+                            FlatButton(
+                              onPressed: () async {
+                                isCorrect('bot');
+                              },
+                              child: Text('               🤖 AI                 '),
+                            ),
+                            Text('or'),
+                            FlatButton(
+                              onPressed: () {
+                                isCorrect('man');
+                              },
+                              child: Text('                    🙎‍ HUMAN️  '),
+                            ),
+                          ],
+                        )
                       ),
 
                     ],
