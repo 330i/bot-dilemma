@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialchatbotapp/leaderboard.dart';
-import 'placeholder.dart';
 import 'signup.dart';
 
 class Login extends StatefulWidget {

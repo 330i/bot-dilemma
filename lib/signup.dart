@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/leaderboard.dart';
 import 'package:socialchatbotapp/login.dart';
 import 'login.dart';
-import 'placeholder.dart';
 
 class SignUp extends StatefulWidget {
   @override
