@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/leaderboard.dart';
 import 'package:socialchatbotapp/login.dart';
+import 'package:socialchatbotapp/ui/screens/startpage.dart';
 import 'login.dart';
 
 class SignUp extends StatefulWidget {
@@ -149,7 +150,7 @@ class _SignUpState extends State<SignUp> {
                                       userid = currentUser.user.uid;
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => LeaderBoard()),
+                                        MaterialPageRoute(builder: (context) => StartPage()),
                                       );
                                     });
                               },

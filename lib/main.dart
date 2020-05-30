@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/ui/screens/screens.dart';
 import 'package:socialchatbotapp/ui/screens/startpage.dart';
+import 'login.dart';
 
 import 'ui/screens/chat.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: StartPage(),
+      home: Login(),
       routes: {
         'chat': (ctx) => ChatScreen(),
       },
