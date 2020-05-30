@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialchatbotapp/leaderboard.dart';
 import 'signup.dart';
 
+var userid;
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -112,7 +114,7 @@ class _LoginState extends State<Login> {
                                       (currentUser) {
                                     Firestore.instance.collection('users').document(currentUser.user.uid).get().then(
                                             (value) {
-                                          final userid = currentUser.user.uid;
+                                          userid = currentUser.user.uid;
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(builder: (context) => (LeaderBoard())),

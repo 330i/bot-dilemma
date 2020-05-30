@@ -146,7 +146,7 @@ class _SignUpState extends State<SignUp> {
                                         "uid":currentUser.user.uid,
                                         "points":0,
                                       });
-                                      final userid = currentUser.user.uid;
+                                      userid = currentUser.user.uid;
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => LeaderBoard()),
