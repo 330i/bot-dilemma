@@ -14,7 +14,13 @@ class _PostGuessState extends State<PostGuess>  {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Container(
+        decoration: BoxDecoration(
+        image: DecorationImage(
+        image: AssetImage('assets/Back.png'),
+    fit: BoxFit.cover)),
+    child: Scaffold(
+    backgroundColor: Colors.transparent,
       body: getWidget(wasCorrect, totalMessages),
       //NAV BAR
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -58,6 +64,7 @@ class _PostGuessState extends State<PostGuess>  {
           ),
         ),
       ),
+              )
     );
   }
 }
@@ -87,9 +94,9 @@ Widget getWidget(bool youCorrect, int messages) {
                         Container(
                           width: 250,
                           child: Text(
-                            getText(youCorrect),
+                            getText(youCorrect,),
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 26),
+                            style: TextStyle(fontSize: 40, color: Colors.black),
                           ),
                         ),
                         SizedBox(height: 20),
@@ -103,7 +110,7 @@ Widget getWidget(bool youCorrect, int messages) {
                                 style: TextStyle(fontSize: 26),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 100),
                             Container(
                               width: 200,
                                 height: 200,
@@ -113,23 +120,22 @@ Widget getWidget(bool youCorrect, int messages) {
                                 )
                             ),
                             SizedBox(height: 20),
-                            Divider(thickness: 4, color: Colors.black,),
                             SizedBox(height: 20),
                             Container(
                               width: 300,
                               child: Text(
                                 getPointsEarned(youCorrect),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 26),
+                                style: TextStyle(fontSize: 30, color: Colors.black),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 10),
                             Container(
                               width: 300,
                               child: Text(
                                 "If your opponent guesses wrong we will add 50 more points",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 26),
+                                style: TextStyle(fontSize: 25),
                               ),
                             ),
                           ],
@@ -153,17 +159,17 @@ int getScore (bool Correctness, int messages){
 Color getColorOne (bool Correctness) {
   print(Correctness);
   if(Correctness == true){
-    return Colors.yellowAccent[100];
+    return Colors.transparent;
   }else{
-    return Colors.purpleAccent[100];
+    return Colors.transparent;
   }
 }
 
 Color getColorTwo (bool Correctness) {
   if(Correctness == true){
-    return Colors.greenAccent[200];
+    return Colors.transparent;
   }else{
-    return Colors.redAccent[200];
+    return Colors.transparent;
   }
 }
 
