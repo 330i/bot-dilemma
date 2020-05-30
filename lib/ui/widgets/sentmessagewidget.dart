@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/global.dart';
 
 class SentMessageWidget extends StatelessWidget {
-  final int i;
+
+
+  final String message;
+
   const SentMessageWidget({
     Key key,
-    this.i,
+    this.message,
   }) : super(key: key);
 
   @override
@@ -16,7 +19,7 @@ class SentMessageWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Text(
-            "${messages[i]['time']}",
+            "",
             style: Theme.of(context).textTheme.body2.apply(color: Colors.grey),
           ),
           SizedBox(width: 15),
@@ -33,7 +36,7 @@ class SentMessageWidget extends StatelessWidget {
               ),
             ),
             child: Text(
-              "${messages[i]['message']}",
+              message,
               style: Theme.of(context).textTheme.body2.apply(
                     color: Colors.white,
                   ),
