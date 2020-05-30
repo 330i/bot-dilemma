@@ -9,7 +9,7 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(''), fit: BoxFit.cover)),
         child: Scaffold(
@@ -22,9 +22,8 @@ class _StartPageState extends State<StartPage> {
                       children: <Widget>[
                         SizedBox(height: 100),
                         Text('Welcome',
-                            style: TextStyle(
-                                fontSize: 50,
-                                color: Colors.black)),
+                            style:
+                                TextStyle(fontSize: 50, color: Colors.black)),
                         SizedBox(height: 10),
                         Text(
                           'Prasann',
@@ -35,20 +34,18 @@ class _StartPageState extends State<StartPage> {
                         //Total Post
                         SizedBox(height: 100),
                         RaisedButton(
-                          child: Text(
-                            'Start Game',
-                            style: TextStyle(color: Colors.black, fontSize: 24),
-                          ),
-                          color: Colors.orange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.orange),
-                          ),
+                          onPressed: () {},
+                          child: const Text('Start Chatting',
+                              style: TextStyle(fontSize: 20)),
                         ),
                         SizedBox(height: 60),
 
                         Container(
-                          margin: EdgeInsets.only(left: 30, top: 80, right: 30,),
+                          margin: EdgeInsets.only(
+                            left: 30,
+                            top: 80,
+                            right: 30,
+                          ),
                           height: 100,
                           width: 330,
                           decoration: BoxDecoration(
@@ -56,15 +53,15 @@ class _StartPageState extends State<StartPage> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20)
-                            ),
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20)),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.orange.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset: Offset(0, 3), // changes position of shadow
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -72,23 +69,16 @@ class _StartPageState extends State<StartPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 SizedBox(height: 10),
-                          Text('Your Total Score',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.black)),
+                                Text('Your Total Score',
+                                    style: TextStyle(
+                                        fontSize: 30, color: Colors.black)),
                                 SizedBox(height: 10),
-                          Text('506',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black)),
-                          ]
-
-                          ),
-                          ),
-          ]
+                                Text('506',
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black)),
+                              ]),
                         ),
-                      ])
-
-                ));
+                      ]),
+                ])));
   }
 }
