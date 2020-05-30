@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:socialchatbotapp/login.dart';
 
-bool wasCorrect = false;
+bool wasCorrect;
 
 class PostGuess extends StatefulWidget {
   @override
@@ -8,6 +10,21 @@ class PostGuess extends StatefulWidget {
 }
 
 class _PostGuessState extends State<PostGuess> {
+
+  Future<int> getPoint() async {
+    var userDoc = Firestore.instance.collection('chats').document('chatexample').get().then((value) {
+      if(value.data['uid1']==userid){
+
+      }
+      if(value.data['uid2']==userid){
+
+      }
+    });
+    if(wasCorrect){
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

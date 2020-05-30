@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:socialchatbotapp/ui/screens/chat.dart';
 import 'postGuess.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: PostGuess()
+      home: ChatScreen()
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:socialchatbotapp/global.dart';
 import 'package:socialchatbotapp/ui/widgets/widgets.dart';
 import 'package:socialchatbotapp/guess.dart';
 
+String guess;
+
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -73,33 +75,46 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText: "               🤖 AI                 or                    🙎‍ HUMAN️  ",
-                              border: InputBorder.none),
-                        ),
+                        child: Row(
+                          children: [
+                            FlatButton(
+                              child: Text('               🤖 AI                 '),
+                              onPressed: () {
+                                guess = 'ai';
+                              },
+                            ),
+                            Text('or'),
+                            FlatButton(
+                              child: Text('                    🙎‍ HUMAN️  '),
+                              onPressed: () {
+                                guess = 'human';
+                                Navigator.of(context,)
+                              },
+                            ),
+                          ],
+                        )
                       ),
 
                     ],
                   ),
                 ),
                 Expanded(
-                  child: FutureBuilder(
-                    future: MessageSend('chatexample').addMessage(),
-                    builder: (context, snapshot){
-                      return ListView.builder(
-                        padding: const EdgeInsets.all(15),
-                        itemCount: messageLength,
-                        itemBuilder: (ctx, i) {
-                          if (!messages[i]['status']) {
-                            return ReceivedMessagesWidget(message: snapshot.data[i]['text']);
-                          } else {
-                            return SentMessageWidget(i: i);
-                          }
-                        },
-                      );
-                    },
-                  )
+                    child: FutureBuilder(
+                      future: MessageSend('chatexample').addMessages(),
+                      builder: (context, snapshot){
+                        return ListView.builder(
+                          padding: const EdgeInsets.all(15),
+                          itemCount: messageLength,
+                          itemBuilder: (ctx, i) {
+                            if (!messages[i]['status']) {
+                              return ReceivedMessagesWidget(message: snapshot.data[i]['text']);
+                            } else {
+                              return SentMessageWidget(i: i);
+                            }
+                          },
+                        );
+                      },
+                    )
                 ),
                 Container(
                   margin: EdgeInsets.all(15.0),
