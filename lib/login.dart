@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:socialchatbotapp/leaderboard.dart';
+import 'package:socialchatbotapp/ui/screens/startpage.dart';
 import 'signup.dart';
 
 var userid;
@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                                           userid = currentUser.user.uid;
                                           Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) => (LeaderBoard())),
+                                            MaterialPageRoute(builder: (context) => (StartPage())),
                                           );
                                         });
                                   }

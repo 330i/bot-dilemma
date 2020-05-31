@@ -39,7 +39,7 @@ class SentMessageWidget extends StatelessWidget {
               message,
               style: Theme.of(context).textTheme.body2.apply(
                     color: Colors.white,
-                  ),
+              ),
             ),
           ),
         ],

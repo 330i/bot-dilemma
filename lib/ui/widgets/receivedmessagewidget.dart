@@ -17,9 +17,6 @@ class ReceivedMessagesWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 7.0),
       child: Row(
         children: <Widget>[
-          MyCircleAvatar(
-            imgUrl: imageUrl,
-          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
