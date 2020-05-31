@@ -63,7 +63,9 @@ class _ChatScreenState extends State<ChatScreen> {
       'date': DateTime.now().millisecondsSinceEpoch.toString()
     });
     if (widget.bot) {
+      print("SENDING BOT MESSAGE");
       await fetchChatBotResult(message).then((response) async {
+        print("BOT MESSAGE SENT");
         await Firestore.instance.collection("messages").add({
           'sender': "bot",
           'message': response,
@@ -138,7 +140,7 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black54),
+        iconTheme: IconThemeData(color: Colors.black),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -158,7 +160,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Text(
                   "Online",
                   style: Theme.of(context).textTheme.subtitle.apply(
-                        color: myGreen,
+                        color: Colors.orangeAccent,
                       ),
                 )
               ],
@@ -179,7 +181,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       BoxShadow(
                           offset: Offset(0, 3),
                           blurRadius: 5,
-                          color: Colors.grey)
+                          color: Colors.black)
                     ],
                   ),
                   child: Row(
@@ -288,6 +290,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
+
         ],
       ),
     );

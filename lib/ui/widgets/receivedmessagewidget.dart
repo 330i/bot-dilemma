@@ -29,7 +29,7 @@ class ReceivedMessagesWidget extends StatelessWidget {
                     maxWidth: MediaQuery.of(context).size.width * .6),
                 padding: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
-                  color: Color(0xfff9f9f9),
+                  color: Colors.black26,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(25),
                     bottomLeft: Radius.circular(25),
@@ -46,10 +46,6 @@ class ReceivedMessagesWidget extends StatelessWidget {
             ],
           ),
           SizedBox(width: 15),
-          Text(
-            "",
-            style: Theme.of(context).textTheme.body2.apply(color: Colors.grey),
-          ),
         ],
       ),
     );
