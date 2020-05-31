@@ -17,7 +17,7 @@ class SentMessageWidget extends StatelessWidget {
         children: <Widget>[
           Text(
             "${messages[i]['time']}",
-            style: Theme.of(context).textTheme.body2.apply(color: Colors.grey),
+            style: Theme.of(context).textTheme.body2.apply(color: Colors.black54),
           ),
           SizedBox(width: 15),
           Container(
@@ -25,7 +25,7 @@ class SentMessageWidget extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width * .6),
             padding: const EdgeInsets.all(15.0),
             decoration: BoxDecoration(
-              color: myGreen,
+              color: Colors.orangeAccent,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
