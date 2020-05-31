@@ -13,16 +13,21 @@ class PostGuess extends StatefulWidget {
 
 class _PostGuessState extends State<PostGuess> {
 
-  Future<int> getPoint() async {
+  getPoint() async {
+    print('enter getPoint');
     int userPoint;
-    var userDoc = await Firestore.instance.collection('users').document(userid);
+    var userDoc = Firestore.instance.collection('users').document(userid);
+    print('mid');
     await Firestore.instance.collection('users').document(userid).get().then((value) {
       userPoint = value.data['points'];
     });
-    if(wasCorrect){
+    print(wasCorrect);
+    if(wasCorrect==true){
+      print('add');
       userDoc.setData({
-        'points':(userPoint+50).toString(),
+        'points':userPoint+50,
       },merge: true);
+      print('added');
     }
   }
 
@@ -49,6 +54,12 @@ class _PostGuessState extends State<PostGuess> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              FutureBuilder(
+                future: getPoint(),
+                builder: (context, snapshot){
+                  return Container();
+                },
+              ),
               RaisedButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
