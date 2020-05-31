@@ -141,14 +141,25 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   child: Row(
                     children: <Widget>[
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText:
-                                  "               🤖 AI                 or                    🙎‍ HUMAN️  ",
-                              border: InputBorder.none),
-                        ),
-                      ),
+                      FlatButton(
+                              onPressed: () async {
+                                isCorrect('bot');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => (PostGuess())));
+                              },
+                              child: Text('               🤖 AI                 '),
+                            ),
+                            Text('or'),
+                            FlatButton(
+                              onPressed: () {
+                                isCorrect('man');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => (PostGuess())));
+                              },
+                              child: Text('                    🙎‍ HUMAN️  '),
+                            ),
                     ],
                   ),
                 ),
