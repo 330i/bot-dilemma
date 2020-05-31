@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:socialchatbotapp/leaderboard.dart';
 import 'package:socialchatbotapp/login.dart';
-
+import 'package:socialchatbotapp/ui/screens/startpage.dart';
 
 class PostGuess extends StatefulWidget {
 
@@ -14,9 +15,11 @@ class PostGuess extends StatefulWidget {
 
 class _PostGuessState extends State<PostGuess> {
 
-  Future<int> getPoint() async {
-    var userPoint;
-    var userDoc = await Firestore.instance.collection('users').document(userid);
+  getPoint() async {
+    print('enter getPoint');
+    int userPoint;
+    var userDoc = Firestore.instance.collection('users').document(userid);
+    print('mid');
     await Firestore.instance.collection('users').document(userid).get().then((value) {
       userPoint = value.data['points'];
     });
@@ -24,6 +27,7 @@ class _PostGuessState extends State<PostGuess> {
       userDoc.setData({
         'points':userPoint+50,
       },merge: true);
+      print('added');
     }
   }
 
@@ -39,7 +43,12 @@ class _PostGuessState extends State<PostGuess> {
           Icons.home,
           color: Colors.black,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StartPage()),
+          );
+        },
       ),
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
@@ -50,12 +59,23 @@ class _PostGuessState extends State<PostGuess> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              FutureBuilder(
+                future: getPoint(),
+                builder: (context, snapshot){
+                  return Container();
+                },
+              ),
               RaisedButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
                 color: Colors.grey[200],
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LeaderBoard()),
+                  );
+                },
                 child: Text('LeaderBoards'),
               ),
               SizedBox(
@@ -67,7 +87,10 @@ class _PostGuessState extends State<PostGuess> {
                 ),
                 color: Colors.grey[200],
                 onPressed: () {
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
                 },
                 child: Text('Sign-Out'),
               )
@@ -228,6 +251,6 @@ Widget getWidget(wasCorrect) {
                           )
                         ],
                       ),
-                    ]))));
+    ]))));
   }
 }

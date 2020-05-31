@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,8 @@ import 'package:socialchatbotapp/login.dart';
 import 'package:socialchatbotapp/ui/widgets/widgets.dart';
 import 'package:socialchatbotapp/guess.dart';
 import '../../postGuess.dart';
+
+bool wasCorrect;
 
 class ChatScreen extends StatefulWidget {
 
