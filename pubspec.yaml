@@ -60,6 +60,9 @@ flutter:
    - assets/images/Twinkle.png
    - assets/Back.png
    - assets/
+   - assets/1st.png
+   - assets/2nd.png
+   - assets/3rd.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

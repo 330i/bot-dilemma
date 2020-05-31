@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:validators/validators.dart';
@@ -25,23 +24,82 @@ class LeaderBoardWidget extends StatelessWidget {
           ),
         if (place == 3)
           Image.asset(
-            ''
                 'assets/3rd.png',
             height: 25,
           ),
+        SizedBox(
+          height: 20,
+        ),
         if (place > 3)
-          Text(
-            place.toString(),
-            style: TextStyle(fontSize: 25),
+
+          Container(
+            margin: const EdgeInsets.only(left: 0.0,),
+            height: 30,
+            width: 25,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.orange.withOpacity(0.5),
+                  spreadRadius: 6,
+                  blurRadius: 6,
+                  offset:
+                  Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: RaisedButton(
+              color: Colors.orangeAccent[100],
+              onPressed: () {
+              },
+              child: Text(
+                place.toString(),
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
           ),
+
+
         Container(
           width: 12,
         ),
-        Text(
-          name,
-          style: TextStyle(
-            fontSize: 25,
-            color: Colors.black,
+        Container(
+          margin: const EdgeInsets.only(left: 17.0, right: 1.0),
+          height: 50,
+          width: 260,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.orange.withOpacity(0.5),
+                spreadRadius: 6,
+                blurRadius: 6,
+                offset:
+                Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: RaisedButton(
+            color: Colors.orangeAccent[100],
+            onPressed: () {
+            },
+            child: Text(
+              name ,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
         Spacer(
@@ -50,7 +108,7 @@ class LeaderBoardWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              'x${point}',
+              '${point}',
               style: TextStyle(
                 fontSize: 25,
                 color: Colors.black,
@@ -88,10 +146,6 @@ class LeaderBoardWidget extends StatelessWidget {
                     height: 250,
                     child: Stack(
                       children: [
-                        Image.asset(
-                          'assets/confetti.gif',
-                          width: MediaQuery.of(context).size.width,
-                        ),
                         Container(
                           alignment: Alignment.bottomCenter,
                           child: Row(
@@ -218,13 +272,14 @@ class _LeaderBoardState extends State<LeaderBoard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+          backgroundColor: Colors.orange,
+          title: Text(
           "Point Leaderboard"
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent[100],
+        backgroundColor: Colors.orange[400],
         child: Icon(
           Icons.home,
           color: Colors.black,
@@ -234,7 +289,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 9,
-        color: Colors.blueAccent[100],
+        color: Colors.orange[400],
         child: Container(
           height: 60,
           child: Row(
@@ -247,7 +302,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
-                color: Colors.blueAccent[200],
+                color: Colors.deepOrange[400],
                 onPressed: () {},
                 child: Text('Sign-Out'),
               )
