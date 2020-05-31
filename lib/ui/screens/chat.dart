@@ -195,7 +195,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               },
                               child: Text('               🤖 AI                 '),
                             ),
-                            Text('or'),
+                            Text('  or'),
                             FlatButton(
                               onPressed: () {
                                 isCorrect('man');
@@ -203,7 +203,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     context,
                                     MaterialPageRoute(builder: (context) => (PostGuess())));
                               },
-                              child: Text('                    🙎‍ HUMAN️  '),
+                              child: Text('                🙎‍ HUMAN   ️  '),
                             ),
                     ],
                   ),

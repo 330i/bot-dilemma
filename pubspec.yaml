@@ -24,6 +24,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   intl:
+  validators:
   flutter:
     sdk: flutter
 
@@ -58,6 +59,9 @@ flutter:
    - assets/images/Star.png
    - assets/images/Twinkle.png
    - assets/Back.png
+   - assets/1st.png
+   - assets/2nd.png
+   - assets/3rd.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
