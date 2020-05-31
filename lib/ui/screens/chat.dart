@@ -175,7 +175,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             message: d.data["message"],
                           ));
                         }
-                        else{
+                        else {
                           messages.add(
                               ReceivedMessagesWidget(message: d.data["message"]));
                         }
