@@ -173,7 +173,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 isCorrect('bot');
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => (PostGuess())),
+                                    MaterialPageRoute(builder: (context) => (PostGuess())));
                               },
                               child: Text('               🤖 AI                 '),
                             ),
@@ -183,7 +183,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 isCorrect('man');
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => (PostGuess())),
+                                    MaterialPageRoute(builder: (context) => (PostGuess())));
                               },
                               child: Text('                    🙎‍ HUMAN️  '),
                             ),
