@@ -67,7 +67,7 @@ class _PostGuessState extends State<PostGuess> {
                 ),
                 color: Colors.grey[200],
                 onPressed: () {
-                  
+
                 },
                 child: Text('Sign-Out'),
               )
