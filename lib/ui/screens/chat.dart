@@ -1,17 +1,141 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:socialchatbotapp/api_client/api_client.dart';
 import 'package:socialchatbotapp/global.dart';
+import 'package:socialchatbotapp/login.dart';
 import 'package:socialchatbotapp/ui/widgets/widgets.dart';
+import 'package:socialchatbotapp/guess.dart';
+import '../../postGuess.dart';
 
 class ChatScreen extends StatefulWidget {
+
+  final bool bot;
+  final String chatId;
+  final String user;
+
+  const ChatScreen({Key key, this.bot, this.chatId, this.user})
+      : super(key: key);
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
   bool _showBottom = false;
+  TextEditingController textInput = new TextEditingController();
+  String chatId;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setInitParams();
+  }
+
+  Future setInitParams() async {
+    await Firestore.instance
+        .collection('chats')
+        .getDocuments()
+        .then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.documents) {
+        if (ds.data["uid1"] == widget.user && ds.data["active1"] == true) {
+          setState(() {
+            chatId = ds.documentID;
+          });
+        }
+        if (ds.data["uid2"] == widget.user && ds.data["active2"] == true) {
+          setState(() {
+            chatId = ds.documentID;
+          });
+        }
+      }
+    });
+  }
+
+  Future sendMessage(String message) async {
+    textInput.clear();
+    await Firestore.instance.collection("messages").add({
+      'sender': widget.user,
+      'message': message,
+      'chatid': chatId,
+      'date': DateTime.now().millisecondsSinceEpoch.toString()
+    });
+    if (widget.bot) {
+      print("SENDING BOT MESSAGE");
+      await fetchChatBotResult(message).then((response) async {
+        print("BOT MESSAGE SENT");
+        await Firestore.instance.collection("messages").add({
+          'sender': "bot",
+          'message': response,
+          'chatid': chatId,
+          'date': DateTime.now().millisecondsSinceEpoch.toString()
+        });
+      });
+    }
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  ScrollController scrollController = ScrollController();
+
+  Future<void> callback() async {
+    print(widget.user);
+    if (textInput.text.length > 0) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
+  }
+
+  bool wasCorrect;
+
+
+  void isCorrect(String guess) {
+    String uid1;
+    String uid2;
+    Firestore.instance.document('chatexample').get().then((value) {
+      uid1 = value.data['uid1'];
+      uid2 = value.data['uid2'];
+    });
+    if(userid==uid1){
+      if(uid2=='bot'&&guess=='bot'){
+        wasCorrect = true;
+      }
+      else if(uid2!='bot'&&guess!='bot'){
+        wasCorrect = true;
+      }
+      else{
+        wasCorrect = false;
+      }
+    }
+    else{
+      if(uid1=='bot'&&guess=='bot'){
+        wasCorrect = true;
+      }
+      else if(uid1!='bot'&&guess!='bot'){
+        wasCorrect = true;
+      }
+      else{
+        wasCorrect = false;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    int messageLength;
+    if (messages != null) {
+      messageLength = messages.length;
+    } else {
+      messageLength = 0;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -62,30 +186,64 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   child: Row(
                     children: <Widget>[
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText:
-                                  "               🤖 AI                     or                 🙎‍ HUMAN️  ",
-                              border: InputBorder.none),
-                        ),
-                      ),
+                      FlatButton(
+                              onPressed: () async {
+                                isCorrect('bot');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => (PostGuess())));
+                              },
+                              child: Text('               🤖 AI                 '),
+                            ),
+                            Text('or'),
+                            FlatButton(
+                              onPressed: () {
+                                isCorrect('man');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => (PostGuess())));
+                              },
+                              child: Text('                    🙎‍ HUMAN️  '),
+                            ),
                     ],
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(15),
-                    itemCount: messages.length,
-                    itemBuilder: (ctx, i) {
-                      if (messages[i]['status'] == MessageType.received) {
-                        return ReceivedMessagesWidget(i: i);
-                      } else {
-                        return SentMessageWidget(i: i);
+                    child: StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance
+                      .collection("messages")
+                      .orderBy("date")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+
+                    List<DocumentSnapshot> docs = snapshot.data.documents;
+
+                    List<Widget> messages = new List<Widget>();
+
+                    for (DocumentSnapshot d in docs) {
+                      if (d.data['chatid'] == chatId) {
+                        if (d.data['sender'] == widget.user) {
+                          messages.add(SentMessageWidget(
+                            message: d.data["message"],
+                          ));
+                        } else {
+                          messages.add(ReceivedMessagesWidget(
+                              message: d.data["message"]));
+                        }
                       }
-                    },
-                  ),
-                ),
+                    }
+                    return ListView(
+                      controller: scrollController,
+                      children: <Widget>[
+                        ...messages,
+                      ],
+                    );
+                  },
+                )),
                 Container(
                   margin: EdgeInsets.all(15.0),
                   height: 61,
@@ -105,15 +263,22 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           child: Row(
                             children: <Widget>[
-                              IconButton(
-                                  icon: Icon(Icons.face), onPressed: () {}),
+                              SizedBox(
+                                width: 20,
+                              ),
                               Expanded(
                                 child: TextField(
+                                  controller: textInput,
                                   decoration: InputDecoration(
                                       hintText: "Type Something...",
                                       border: InputBorder.none),
                                 ),
                               ),
+                              IconButton(
+                                  icon: Icon(Icons.send),
+                                  onPressed: () {
+                                    sendMessage(textInput.text);
+                                  }),
                             ],
                           ),
                         ),
@@ -125,10 +290,9 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
+
         ],
       ),
     );
   }
 }
-
-List<IconData> icons = [];

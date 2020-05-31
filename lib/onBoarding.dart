@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:socialchatbotapp/login.dart';
 import 'postGuess.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -255,7 +256,7 @@ class FinalScreen extends StatelessWidget {
                     onPressed:(){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PostGuess()),
+                        MaterialPageRoute(builder: (context) => Login()),
                       );
                     },
                   )

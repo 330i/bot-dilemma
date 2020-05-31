@@ -1,27 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:socialchatbotapp/login.dart';
 
-
+bool wasCorrect;
 
 class PostGuess extends StatefulWidget {
   @override
   _PostGuessState createState() => _PostGuessState();
 }
 
-class _PostGuessState extends State<PostGuess>  {
-  //Sample Data... idk make constructors if you want idk how tf to do that tho
-  bool wasCorrect = false;
-  int totalMessages = 0;
+class _PostGuessState extends State<PostGuess> {
+
+  Future<int> getPoint() async {
+    var userPoint;
+    var userDoc = await Firestore.instance.collection('users').document(userid);
+    await Firestore.instance.collection('users').document(userid).get().then((value) {
+      userPoint = value.data['points'];
+    });
+    if(wasCorrect){
+      userDoc.setData({
+        'points':userPoint+50,
+      },merge: true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-        image: DecorationImage(
-        image: AssetImage('assets/Back.png'),
-    fit: BoxFit.cover)),
-    child: Scaffold(
-    backgroundColor: Colors.transparent,
-      body: getWidget(wasCorrect, totalMessages),
+    return Scaffold(
+      body: getWidget(wasCorrect),
       //NAV BAR
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -64,12 +70,12 @@ class _PostGuessState extends State<PostGuess>  {
           ),
         ),
       ),
-              )
     );
   }
 }
 
-Widget getWidget(bool youCorrect, int messages) {
+Widget getWidget(wasCorrect) {
+  if (wasCorrect == true) {
     return Align(
         child: Container(
             decoration: BoxDecoration(
@@ -77,130 +83,146 @@ Widget getWidget(bool youCorrect, int messages) {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                  getColorOne(youCorrect),
-                  getColorTwo(youCorrect)
+                  Colors.greenAccent[100],
+                  Colors.greenAccent[200]
                 ])),
             child: Column(
                 children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 100,
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 100,
+                      ),
+                      Container(
+                        width: 250,
+                        child: Text(
+                          "Congrats!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 26),
                         ),
-                        Container(
-                          width: 250,
-                          child: Text(
-                            getText(youCorrect,),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 40, color: Colors.black),
+                      ),
+                      SizedBox(height: 20),
+                      Column(
+                        children: [
+                          Container(
+                            width: 250,
+                            child: Text(
+                              'You guessed it properly!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 26),
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                        Column(
-                          children: [
-                            Container(
-                              width: 250,
-                              child: Text(
-                                getNextText(youCorrect),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 26),
-                              ),
+                          SizedBox(height: 20),
+                          Container(
+                            width: 200,
+                              height: 200,
+                              child: Image.asset(
+                                  'assets/images/ThumbsUP.png',
+                                fit: BoxFit.cover,
+                              )
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                            width: 250,
+                            child: Text(
+                              "You weren't going to be fooled!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 26),
                             ),
-                            SizedBox(height: 100),
-                            Container(
-                              width: 200,
-                                height: 200,
-                                child: Image.asset(
-                                    getImage(youCorrect),
-                                  fit: BoxFit.cover,
-                                )
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                            width: 250,
+                            child: Text(
+                              "You get 50 points!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 26),
                             ),
-                            SizedBox(height: 20),
-                            SizedBox(height: 20),
-                            Container(
-                              width: 300,
-                              child: Text(
-                                getPointsEarned(youCorrect),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 30, color: Colors.black),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              width: 300,
-                              child: Text(
-                                "If your opponent guesses wrong we will add 50 more points",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 25),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                          ),
+                        ],
+                      )
+                    ],
                   )
                 ],
               ),
-            ]
-            )
-        )
-    );
-}
-
-
-int getScore (bool Correctness, int messages){
-  int score = 0;
-}
-
-Color getColorOne (bool Correctness) {
-  print(Correctness);
-  if(Correctness == true){
-    return Colors.transparent;
-  }else{
-    return Colors.transparent;
-  }
-}
-
-Color getColorTwo (bool Correctness) {
-  if(Correctness == true){
-    return Colors.transparent;
-  }else{
-    return Colors.transparent;
-  }
-}
-
-String getText (bool Correctness){
-  if(Correctness == true){
-    return "Congrats!";
-  }else{
-    return "Uh-Oh!";
-  }
-}
-
-String getNextText(bool Correctness){
-  if(Correctness == true){
-    return "You guessed it properly!";
-  }else{
-    return "You got tricked!";
-  }
-}
-
-String getImage(bool Correctness){
-  if(Correctness == true){
-    return 'assets/images/ThumbsUP.png';
-  }else{
-    return 'assets/images/ThumbsDown.png';
-  }
-}
-
-String getPointsEarned(bool Correctness){
-  if(Correctness == true){
-    return "You get 50 points!";
-  }else{
-    return "You get 0 points...";
+            ])));
+  } else {
+    return Align(
+        child: SafeArea(
+            child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.redAccent[100],
+                          Colors.redAccent[200]
+                        ])),
+                child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 100,
+                              ),
+                              Container(
+                                width: 250,
+                                child: Text(
+                                  "Oops!",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 26),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 250,
+                                    child: Text(
+                                      'You guessed it incorrectly!',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 26),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  Container(
+                                      width: 200,
+                                      height: 200,
+                                      child: Image.asset(
+                                        'assets/images/ThumbsDown.png',
+                                        fit: BoxFit.cover,
+                                      )
+                                  ),
+                                  SizedBox(height: 20),
+                                  Container(
+                                    width: 250,
+                                    child: Text(
+                                      "You got fooled by your opponent!",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 26),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  Container(
+                                    width: 250,
+                                    child: Text(
+                                      "You get 0 points...",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 26),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ]))));
   }
 }
