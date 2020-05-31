@@ -6,8 +6,10 @@ import 'package:socialchatbotapp/global.dart';
 import 'package:socialchatbotapp/login.dart';
 import 'package:socialchatbotapp/ui/widgets/widgets.dart';
 import 'package:socialchatbotapp/guess.dart';
+import '../../postGuess.dart';
 
 class ChatScreen extends StatefulWidget {
+
   final bool bot;
   final String chatId;
   final String user;
@@ -183,24 +185,31 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                          child: Row(
-                        children: [
-                          FlatButton(
-                            onPressed: () async {
-                              isCorrect('bot');
-                            },
-                            child:
-                                Text('               🤖 AI                 '),
-                          ),
-                          Text('or'),
-                          FlatButton(
-                            onPressed: () {
-                              isCorrect('man');
-                            },
-                            child: Text('                    🙎‍ HUMAN️  '),
-                          ),
-                        ],
-                      )),
+                        child: Row(
+                          children: [
+                            FlatButton(
+                              onPressed: () async {
+                                isCorrect('bot');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => (PostGuess())));
+                              },
+                              child: Text('               🤖 AI                 '),
+                            ),
+                            Text('or'),
+                            FlatButton(
+                              onPressed: () {
+                                isCorrect('man');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => (PostGuess())));
+                              },
+                              child: Text('                    🙎‍ HUMAN️  '),
+                            ),
+                          ],
+                        )
+                      ),
+
                     ],
                   ),
                 ),
