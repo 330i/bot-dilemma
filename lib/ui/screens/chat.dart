@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,8 @@ import 'package:socialchatbotapp/login.dart';
 import 'package:socialchatbotapp/ui/widgets/widgets.dart';
 import 'package:socialchatbotapp/guess.dart';
 import '../../postGuess.dart';
+
+bool wasCorrect;
 
 class ChatScreen extends StatefulWidget {
 
@@ -92,17 +96,17 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  bool wasCorrect;
 
-
-  void isCorrect(String guess) {
+  void isCorrect(String guess) async {
     String uid1;
     String uid2;
-    Firestore.instance.document('chatexample').get().then((value) {
-      uid1 = value.data['uid1'];
-      uid2 = value.data['uid2'];
+    await Firestore.instance.collection('chats').document(chatId).get().then((value) {
+      uid1 = value.data['uid1'].toString();
+      uid2 = value.data['uid2'].toString();
+      print('uid1: '+uid1+' uid2: '+uid2);
     });
     if(userid==uid1){
+      print('testing if '+uid2+' is equal to '+guess);
       if(uid2=='bot'&&guess=='bot'){
         wasCorrect = true;
       }
@@ -113,7 +117,8 @@ class _ChatScreenState extends State<ChatScreen> {
         wasCorrect = false;
       }
     }
-    else{
+    else if(userid==uid2){
+      print('testing if '+uid1+' is equal to '+guess);
       if(uid1=='bot'&&guess=='bot'){
         wasCorrect = true;
       }
@@ -123,6 +128,7 @@ class _ChatScreenState extends State<ChatScreen> {
       else{
         wasCorrect = false;
       }
+      print(wasCorrect);
     }
   }
 
@@ -186,7 +192,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     children: <Widget>[
                       FlatButton(
                               onPressed: () async {
-                                isCorrect('bot');
+                                await isCorrect('bot');
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => (PostGuess())));
@@ -195,8 +201,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                             Text('or'),
                             FlatButton(
-                              onPressed: () {
-                                isCorrect('man');
+                              onPressed: () async {
+                                await isCorrect('man');
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => (PostGuess())));

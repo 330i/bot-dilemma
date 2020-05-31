@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/login.dart';
-
-bool wasCorrect;
+import 'package:socialchatbotapp/ui/screens/chat.dart';
+import 'package:validators/validators.dart';
 
 class PostGuess extends StatefulWidget {
   @override
@@ -12,14 +14,14 @@ class PostGuess extends StatefulWidget {
 class _PostGuessState extends State<PostGuess> {
 
   Future<int> getPoint() async {
-    var userPoint;
+    int userPoint;
     var userDoc = await Firestore.instance.collection('users').document(userid);
     await Firestore.instance.collection('users').document(userid).get().then((value) {
       userPoint = value.data['points'];
     });
     if(wasCorrect){
       userDoc.setData({
-        'points':userPoint+50,
+        'points':(userPoint+50).toString(),
       },merge: true);
     }
   }
