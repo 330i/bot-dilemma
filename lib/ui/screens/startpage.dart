@@ -33,7 +33,7 @@ class _StartPageState extends State<StartPage> {
                         SizedBox(height: 100),
 
                         //Total Post
-                        SizedBox(height: 50),
+                        SizedBox(height: 30),
                         Container(
                           height: 50,
                           width: 200,
@@ -58,6 +58,35 @@ class _StartPageState extends State<StartPage> {
                             color: Colors.orangeAccent[100],
                             onPressed: () {},
                             child: const Text('Start Chatting',
+                                style: TextStyle(fontSize: 26)),
+                          ),
+                        ),
+                        SizedBox(height: 25),
+
+                        Container(
+                          height: 50,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.orange.withOpacity(0.5),
+                                spreadRadius: 6,
+                                blurRadius: 6,
+                                offset:
+                                Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: RaisedButton(
+                            color: Colors.orangeAccent[100],
+                            onPressed: () {},
+                            child: const Text('Leaderboard',
                                 style: TextStyle(fontSize: 26)),
                           ),
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/ui/screens/chat.dart';
+import 'package:socialchatbotapp/ui/screens/startpage.dart';
 import 'leaderBoard.dart';
 import 'postGuess.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: ChatScreen()
+      home: StartPage()
     );
   }
 }
