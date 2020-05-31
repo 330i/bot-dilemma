@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LeaderBoard extends StatelessWidget {
-  _space(int place, String name, int star) {
+  _space(int place, String name, int point) {
     return Row(
       children: [
         if (place == 1)
@@ -43,12 +43,8 @@ class LeaderBoard extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(
-              'assets/star.jpg',
-              height: 25,
-            ),
             Text(
-              'x${star}',
+              'x${point}',
               style: TextStyle(
                 fontSize: 25,
                 color: Colors.black,
