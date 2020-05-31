@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/login.dart';
 
-bool wasCorrect;
 
 class PostGuess extends StatefulWidget {
+
+  final bool wasCorrect;
+
+  const PostGuess({Key key, this.wasCorrect}) : super(key: key);
   @override
   _PostGuessState createState() => _PostGuessState();
 }
@@ -17,7 +20,7 @@ class _PostGuessState extends State<PostGuess> {
     await Firestore.instance.collection('users').document(userid).get().then((value) {
       userPoint = value.data['points'];
     });
-    if(wasCorrect){
+    if(widget.wasCorrect){
       userDoc.setData({
         'points':userPoint+50,
       },merge: true);
@@ -27,7 +30,7 @@ class _PostGuessState extends State<PostGuess> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: getWidget(wasCorrect),
+      body: getWidget(widget.wasCorrect),
       //NAV BAR
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -63,7 +66,9 @@ class _PostGuessState extends State<PostGuess> {
                   borderRadius: BorderRadius.circular(18.0),
                 ),
                 color: Colors.grey[200],
-                onPressed: () {},
+                onPressed: () {
+                  
+                },
                 child: Text('Sign-Out'),
               )
             ],

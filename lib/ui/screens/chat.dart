@@ -55,6 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future sendMessage(String message) async {
+    print("SENDING MESSAGE");
     textInput.clear();
     await Firestore.instance.collection("messages").add({
       'sender': widget.user,
@@ -97,35 +98,8 @@ class _ChatScreenState extends State<ChatScreen> {
   bool wasCorrect;
 
 
-  void isCorrect(String guess) {
-    String uid1;
-    String uid2;
-    Firestore.instance.document('chatexample').get().then((value) {
-      uid1 = value.data['uid1'];
-      uid2 = value.data['uid2'];
-    });
-    if(userid==uid1){
-      if(uid2=='bot'&&guess=='bot'){
-        wasCorrect = true;
-      }
-      else if(uid2!='bot'&&guess!='bot'){
-        wasCorrect = true;
-      }
-      else{
-        wasCorrect = false;
-      }
-    }
-    else{
-      if(uid1=='bot'&&guess=='bot'){
-        wasCorrect = true;
-      }
-      else if(uid1!='bot'&&guess!='bot'){
-        wasCorrect = true;
-      }
-      else{
-        wasCorrect = false;
-      }
-    }
+  void isCorrect(bool guess) {
+    wasCorrect = guess==widget.bot;
   }
 
   @override
@@ -188,20 +162,20 @@ class _ChatScreenState extends State<ChatScreen> {
                     children: <Widget>[
                       FlatButton(
                               onPressed: () async {
-                                isCorrect('bot');
+                                isCorrect(true);
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => (PostGuess())));
+                                    MaterialPageRoute(builder: (context) => (PostGuess(wasCorrect: wasCorrect,))));
                               },
                               child: Text('               🤖 AI                 '),
                             ),
                             Text('or'),
                             FlatButton(
                               onPressed: () {
-                                isCorrect('man');
+                                isCorrect(false);
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => (PostGuess())));
+                                    MaterialPageRoute(builder: (context) => (PostGuess(wasCorrect: wasCorrect,))));
                               },
                               child: Text('                    🙎‍ HUMAN️  '),
                             ),

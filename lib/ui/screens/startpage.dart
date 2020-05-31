@@ -3,13 +3,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/ui/screens/chat.dart';
-
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialchatbotapp/leaderboard.dart';
 import 'package:socialchatbotapp/login.dart';
 
@@ -121,7 +115,7 @@ class _StartPageState extends State<StartPage> {
     print("THIS CHAT IS WITH A BOT "+ bot.toString() );
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ChatScreen(bot: false,user: user,)),
+      MaterialPageRoute(builder: (context) => ChatScreen(bot: bot,user: user,)),
     );
   }
 
