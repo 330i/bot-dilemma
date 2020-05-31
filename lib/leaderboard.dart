@@ -50,7 +50,7 @@ class LeaderBoardWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              'x${point}',
+              point.toString(),
               style: TextStyle(
                 fontSize: 25,
                 color: Colors.black,
@@ -88,10 +88,6 @@ class LeaderBoardWidget extends StatelessWidget {
                     height: 250,
                     child: Stack(
                       children: [
-                        Image.asset(
-                          'assets/confetti.gif',
-                          width: MediaQuery.of(context).size.width,
-                        ),
                         Container(
                           alignment: Alignment.bottomCenter,
                           child: Row(
