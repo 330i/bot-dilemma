@@ -217,13 +217,14 @@ class _LeaderBoardState extends State<LeaderBoard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+          backgroundColor: Colors.orange,
+          title: Text(
           "Point Leaderboard"
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent[100],
+        backgroundColor: Colors.orange[400],
         child: Icon(
           Icons.home,
           color: Colors.black,
@@ -233,7 +234,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 9,
-        color: Colors.blueAccent[100],
+        color: Colors.orange[400],
         child: Container(
           height: 60,
           child: Row(
@@ -246,7 +247,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
-                color: Colors.blueAccent[200],
+                color: Colors.deepOrange[300],
                 onPressed: () {},
                 child: Text('Sign-Out'),
               )
