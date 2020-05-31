@@ -184,10 +184,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   child: Row(
                     children: <Widget>[
-                      Expanded(
-                        child: Row(
-                          children: [
-                            FlatButton(
+                      FlatButton(
                               onPressed: () async {
                                 isCorrect('bot');
                                 Navigator.push(
@@ -206,10 +203,6 @@ class _ChatScreenState extends State<ChatScreen> {
                               },
                               child: Text('                    🙎‍ HUMAN️  '),
                             ),
-                          ],
-                        )
-                      ),
-
                     ],
                   ),
                 ),
