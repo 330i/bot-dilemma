@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchatbotapp/api_client/api_client.dart';
 import 'package:socialchatbotapp/global.dart';
+import 'package:socialchatbotapp/login.dart';
 import 'package:socialchatbotapp/ui/widgets/widgets.dart';
 import 'package:socialchatbotapp/guess.dart';
 
@@ -53,14 +54,20 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future sendMessage(String message) async {
     textInput.clear();
-    await Firestore.instance
-        .collection("messages")
-        .add({'sender': widget.user, 'message': message, 'chatid': chatId, 'date':DateTime.now().millisecondsSinceEpoch.toString()});
+    await Firestore.instance.collection("messages").add({
+      'sender': widget.user,
+      'message': message,
+      'chatid': chatId,
+      'date': DateTime.now().millisecondsSinceEpoch.toString()
+    });
     if (widget.bot) {
       await fetchChatBotResult(message).then((response) async {
-        await Firestore.instance
-            .collection("messages")
-            .add({'sender': "bot", 'message': response, 'chatid': chatId,  'date':DateTime.now().millisecondsSinceEpoch.toString()});
+        await Firestore.instance.collection("messages").add({
+          'sender': "bot",
+          'message': response,
+          'chatid': chatId,
+          'date': DateTime.now().millisecondsSinceEpoch.toString()
+        });
       });
     }
     scrollController.animateTo(
@@ -80,6 +87,40 @@ class _ChatScreenState extends State<ChatScreen> {
         curve: Curves.easeOut,
         duration: const Duration(milliseconds: 300),
       );
+    }
+  }
+
+  bool wasCorrect;
+
+
+  void isCorrect(String guess) {
+    String uid1;
+    String uid2;
+    Firestore.instance.document('chatexample').get().then((value) {
+      uid1 = value.data['uid1'];
+      uid2 = value.data['uid2'];
+    });
+    if(userid==uid1){
+      if(uid2=='bot'&&guess=='bot'){
+        wasCorrect = true;
+      }
+      else if(uid2!='bot'&&guess!='bot'){
+        wasCorrect = true;
+      }
+      else{
+        wasCorrect = false;
+      }
+    }
+    else{
+      if(uid1=='bot'&&guess=='bot'){
+        wasCorrect = true;
+      }
+      else if(uid1!='bot'&&guess!='bot'){
+        wasCorrect = true;
+      }
+      else{
+        wasCorrect = false;
+      }
     }
   }
 
@@ -142,13 +183,24 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText:
-                                  "               🤖 AI                 or                    🙎‍ HUMAN️  ",
-                              border: InputBorder.none),
-                        ),
-                      ),
+                          child: Row(
+                        children: [
+                          FlatButton(
+                            onPressed: () async {
+                              isCorrect('bot');
+                            },
+                            child:
+                                Text('               🤖 AI                 '),
+                          ),
+                          Text('or'),
+                          FlatButton(
+                            onPressed: () {
+                              isCorrect('man');
+                            },
+                            child: Text('                    🙎‍ HUMAN️  '),
+                          ),
+                        ],
+                      )),
                     ],
                   ),
                 ),
@@ -174,10 +226,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           messages.add(SentMessageWidget(
                             message: d.data["message"],
                           ));
-                        }
-                        else {
-                          messages.add(
-                              ReceivedMessagesWidget(message: d.data["message"]));
+                        } else {
+                          messages.add(ReceivedMessagesWidget(
+                              message: d.data["message"]));
                         }
                       }
                     }

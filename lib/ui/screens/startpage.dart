@@ -34,6 +34,7 @@ class _StartPageState extends State<StartPage> {
 
     String chat;
 
+    bool bot = false;
 
     await Firestore.instance.collection('chats').getDocuments().then((snapshot) async {
       for (DocumentSnapshot ds in snapshot.documents){
@@ -42,6 +43,9 @@ class _StartPageState extends State<StartPage> {
             active= true;
             chat = ds.documentID.toString();
           });
+          if(ds.data["uid2"]=='bot'){
+            bot = true;
+          }
           break;
         }
         if(ds.data["uid2"]==user&&ds.data["active2"]==true){
@@ -114,6 +118,7 @@ class _StartPageState extends State<StartPage> {
         }
       };
     });
+    print("THIS CHAT IS WITH A BOT "+ bot.toString() );
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ChatScreen(bot: false,user: user,)),
